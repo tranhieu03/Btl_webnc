@@ -40,6 +40,7 @@ namespace G09.Controllers
                     Thiches = b.Thiches,
                     IsLiked = _context.Thiches.Any(t => t.MaBaiViet == b.MaBaiViet && t.MaNguoiDung == us.MaNguoiDung),
                     SoLuongLike = b.SoLuongLike
+
                 }).ToList();
 
             var cmts = _context.BinhLuans.Select(b => new BinhLuan
@@ -126,6 +127,51 @@ namespace G09.Controllers
 
 
         }
+        //[HttpPost]
+        //public IActionResult FollowPost(int mabaiviet)
+        //{
+        //    var currentUserEmail = HttpContext.Session.GetString("Email");
+        //    var uss = _context.NguoiDungs.FirstOrDefault(t => t.Email == currentUserEmail);
+
+        //    if (uss == null)
+        //    {
+        //        return Json(new { success = false, message = "Người dùng không tồn tại" });
+        //    }
+
+        //    // Lấy thông tin của bài viết và người dùng được theo dõi
+        //    var baiViet = _context.BaiViets.FirstOrDefault(b => b.MaBaiViet == mabaiviet);
+
+        //    if (baiViet == null)
+        //    {
+        //        return Json(new { success = false, message = "Bài viết không tồn tại" });
+        //    }
+
+        //    // Kiểm tra nếu người dùng đã theo dõi người dùng được liên kết với bài viết này
+        //    var existingFollow = _context.TheoDois
+        //        .FirstOrDefault(t => t.MaNguoiTheoDoi == uss.MaNguoiDung && t.MaNguoiDuocTheoDoi == baiViet.MaNguoiDung);
+
+        //    if (existingFollow != null)
+        //    {
+        //        // Nếu đã theo dõi, hủy theo dõi
+        //        _context.TheoDois.Remove(existingFollow);
+        //        _context.SaveChanges();
+        //        return Json(new { success = true, isFollowed = false });
+        //    }
+        //    else
+        //    {
+        //        // Nếu chưa theo dõi, thêm vào bảng TheoDoi
+        //        var follow = new TheoDoi
+        //        {
+        //            MaNguoiTheoDoi = uss.MaNguoiDung,
+        //            MaNguoiDuocTheoDoi = baiViet.MaNguoiDung,
+        //            NgayTao = DateTime.Now
+        //        };
+        //        _context.TheoDois.Add(follow);
+        //        _context.SaveChanges();
+        //        return Json(new { success = true, isFollowed = true });
+        //    }
+        //}
+
     }
 }
 

@@ -22,9 +22,10 @@
             <div class="info">
                 <p class="name" id="ten_ND">
                     @ViewBag.nguoiD.TenNguoiDung
-                    <button class="edit_profile" data-toggle="modal" data-target="#editProfile">
-                        chỉnh sửa thông tin 
+                    <button class="edit_profile" data-toggle="modal" data-target="#editProfileModal">
+                        Chỉnh sửa thông tin
                     </button>
+
                     <a class="edit_profile btn" style="padding: 5px 15px;font-size: 15px;margin-left:5px;border: none;font-weight: 500;background-color: rgb(239, 239, 239);" asp-controller="Access" asp-action="Logout">
                         đăng xuất
                     </a>
@@ -121,36 +122,41 @@
     </div>
     <!--***** posts_container end ****** -->
     <!-- form edit profile -->
-    <div class="modal fade" id="editProfile" tabindex="-1" aria-labelledby="editProfilelLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
+    <!-- Modal để chỉnh sửa thông tin cá nhân -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">Chỉnh sửa thông tin cá nhân</h5>
-                    @* <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btn_close"></button> *@
-                </div>
-                <div class="modal-body">
-                    <form id="editProfileForm" method="post" enctype="multipart/form-data" action="/TrangCaNhan/editProfile">
+                <form asp-action="EditProfile" asp-controller="TrangCaNhan" method="post" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProfileModalLabel">Chỉnh sửa thông tin cá nhân</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
                         <div class="form-group">
-                            <label for="imageUpload" class="form-label">Chọn ảnh đại diện</label>
-                            <input type="file" class="form-control" id="imageUpload" name="image" accept="image/*" onchange="previewImage()">
-                            <div id="imagePreview" class="mt-3"></div>
+                            <label for="profileImage">Ảnh đại diện</label>
+                            <input type="file" class="form-control" id="profileImage" name="image">
                         </div>
-                        <div class="form-group mt-3">
-                            <label for="tenND" class="form-label">Tên người dùng</label>
-                            <input type="text" class="form-control" id="tenND" name="tenND" placeholder="">
+                        <div class="form-group">
+                            <label for="tenND">Tên người dùng</label>
+                            <input type="text" class="form-control" id="tenND" name="tenND" value="@ViewBag.nguoiD.TenNguoiDung">
                         </div>
-                        <div class="form-group mt-3">
-                            <label for="tieuSu" class="form-label">Tiểu Sử</label>
-                            <textarea class="form-control" id="tieuSu" name="TieuSu" rows="4" placeholder=""></textarea>
+                        <div class="form-group">
+                            <label for="TieuSu">Tiểu sử</label>
+                            <textarea class="form-control" id="TieuSu" name="TieuSu">@ViewBag.nguoiD.TieuSu</textarea>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer" style="text-align:center">
-                    <button type="button" class="btn btn-primary" onclick="document.getElementById('editProfileForm').submit();">Lưu thay đổi</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+
+
 
 </div>
 

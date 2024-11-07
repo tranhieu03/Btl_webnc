@@ -41,7 +41,7 @@ namespace G09.Controllers
                     HttpContext.Session.SetString("Email", user.Email);
 
                     HttpContext.Session.SetInt32("id", user.MaNguoiDung);
-                    HttpContext.Session.SetString("UrlAnhDD", user.AnhDaiDien);
+                    //HttpContext.Session.SetString("urlanhdd", user.AnhDaiDien);
                     HttpContext.Session.SetString("tenND", user.TenNguoiDung);
 
                     

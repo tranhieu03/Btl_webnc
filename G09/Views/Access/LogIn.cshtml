@@ -1,6 +1,4 @@
-﻿
-
-@{
+﻿@{
     Layout = null;
 }
 @model NguoiDung
@@ -11,39 +9,129 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram</title>
+    <title>nhom 8</title>
     <link rel="stylesheet" href="../LayoutTrangChu/sass/vender/bootstrap.css">
     <link rel="stylesheet" href="../LayoutTrangChu/sass/vender/bootstrap.min.css">
-
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="../LayoutTrangChu/sass/main.css">
+
+    <style>
+        /* General styling for the page */
+        body {
+            background-color: #fafafa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Centering the login box */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Login box styling */
+        .login {
+            background: #ffffff;
+            padding: 30px 40px;
+            border: 1px solid #dbdbdb;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            /* Textbox and button styling */
+            .login .content {
+                text-align: center;
+            }
+
+                .login .content input {
+                    width: 100%;
+                    padding: 10px;
+                    margin: 8px 0;
+                    border-radius: 5px;
+                    border: 1px solid #dbdbdb;
+                    box-sizing: border-box;
+                }
+
+            .login .log_btn {
+                width: 100%;
+                padding: 10px;
+                background-color: #3897f0;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+            }
+
+                .login .log_btn:hover {
+                    background-color: #2b85e4;
+                }
+
+        /* Sign-up section styling */
+        .sing-up {
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #8e8e8e;
+            text-align: center;
+        }
+
+            .sing-up a {
+                color: #3897f0;
+                text-decoration: none;
+                font-weight: bold;
+            }
+
+                .sing-up a:hover {
+                    text-decoration: underline;
+                }
+
+        /* Download section styling */
+        .download {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #8e8e8e;
+        }
+
+            .download p {
+                margin-bottom: 10px;
+            }
+
+            .download img {
+                width: 120px;
+                margin: 5px;
+                cursor: pointer;
+            }
+    </style>
 </head>
 <body>
     <div class="container">
         <div class="login">
             <div class="content">
-                <div class="log-on border_insc">
-                    <div class="logo">
-                        <img src="../LayoutTrangChu/img/foodgo9.png" alt="FoodG09 logo">
+                <h2 style="font-size: 1.5em; font-weight: bold; color: #333; margin-bottom: 20px;">Log in to Instagram</h2>
+
+                @using (Html.BeginForm("LogIn", "Access", FormMethod.Post))
+                {
+                    <div>
+                        @Html.TextBoxFor(x => x.Email, new { placeholder = "Email", required = "required", autofocus = "autofocus" })
                     </div>
-                   @*  <form> *@
-                    @using(Html.BeginForm("LogIn", "Access", FormMethod.Post))
-                    {
-                        <div>
-                            @Html.TextBoxFor(x => x.Email, new { placeholder = "Email", required = "required", autofocus = "autofocus" })
-                        </div>
-                        <div>
-                            @Html.TextBoxFor(x => x.MatKhau, new {type = "password", placeholder = "Password" })
-                        </div>
-                        <div>
-                            <button class="log_btn" type="submit">
-                                Log in
-                            </button>
-                        </div>
-                    }
-                    @* </form> *@
-                  
-                </div>
+                    <div>
+                        @Html.TextBoxFor(x => x.MatKhau, new { type = "password", placeholder = "Password" })
+                    </div>
+                    <div>
+                        <button class="log_btn" type="submit">
+                            Log in
+                        </button>
+                    </div>
+                }
+
                 <div class="sing-up border_insc">
                     <p>
                         Don't have an account?
@@ -53,18 +141,14 @@
                 <div class="download">
                     <p>Get the app.</p>
                     <div>
-                        <img src="../LayoutTrangChu/img/google_play_icon.png" alt="download app from google play">
-                        <img src="../LayoutTrangChu/img/microsoft-icon.png" alt="download app from microsoft">
+                        <img src="../LayoutTrangChu/img/google_play_icon.png" alt="Download from Google Play">
+                        <img src="../LayoutTrangChu/img/microsoft-icon.png" alt="Download from Microsoft Store">
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @* <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script> *@
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
-
-
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script> -->
 </body>
 </html>
-

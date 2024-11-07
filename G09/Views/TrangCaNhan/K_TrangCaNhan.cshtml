@@ -1,8 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "K_TrangCaNhan";
+    ViewData["Title"] = "TrangCaNhan";
     Layout = "~/Views/Shared/_LayoutTrangChu.cshtml";
 }@{
-    var reversedBaiViets = ((List<BaiViet>)ViewBag.K_baiV).AsEnumerable().Reverse();
+    var reversedBaiViets = ((List<BaiViet>)ViewBag.baiV).AsEnumerable().Reverse();
 }
 <style>
     .modal-footer {
@@ -17,21 +17,27 @@
     <div class="profile_info">
         <div class="cart">
             <div class="img" id="imgND">
-                <img src=" @Url.Content(@ViewBag.K_nguoiD.AnhDaiDien)" alt="">
+                <img src=" @Url.Content(@ViewBag.nguoiD.AnhDaiDien)" alt="">
             </div>
             <div class="info">
                 <p class="name" id="ten_ND">
-                    @ViewBag.K_nguoiD.TenNguoiDung
-                   
+                    @ViewBag.nguoiD.TenNguoiDung
+                    <button class="edit_profile" data-toggle="modal" data-target="#editProfileModal">
+                        Chỉnh sửa thông tin
+                    </button>
+
+                    <a class="edit_profile btn" style="padding: 5px 15px;font-size: 15px;margin-left:5px;border: none;font-weight: 500;background-color: rgb(239, 239, 239);" asp-controller="Access" asp-action="Logout">
+                        đăng xuất
+                    </a>
                 </p>
                 <div class="general_info">
-                    <p><span>@ViewBag.K_baiV.Count</span> post</p>
-                    <p><span>@ViewBag.K_SoNguoi_DcTheoDoi</span> followers</p>
-                    <p><span>@ViewBag.K_SoNguoi_DcTheoDoi</span> following</p>
+                    <p><span>@ViewBag.baiV.Count</span> post</p>
+                    <p><span>@ViewBag.SoNguoi_DcTheoDoi</span> followers</p>
+                    <p><span>@ViewBag.SoNguoi_DcTheoDoi</span> following</p>
                 </div>
 
                 <p class="desc" id="tieu_Su">
-                    @ViewBag.K_nguoiD.TieuSu
+                    @ViewBag.nguoiD.TieuSu
                 </p>
             </div>
         </div>
@@ -55,7 +61,13 @@
                                 <br />
                                 <span style="margin-left: 35px; font-size: small; position: relative; top: -10px;">@baiViet.TenLoaiMonAn</span>
                             </div>
-                            
+                            <div class="more" onmouseover="showMenu(@baiViet.MaBaiViet)" onmouseout="hideMenu(@baiViet.MaBaiViet)">
+                                <img src="../LayoutTrangChu/img/show_more.png" alt="show more">
+                                <div class="menu-content" id="menuContent_@baiViet.MaBaiViet">
+                                    <button onclick="editForm(@baiViet.MaBaiViet)">Sửa</button>
+                                    <button onclick="deleteItem(@baiViet.MaBaiViet)">Xóa</button>
+                                </div>
+                            </div>
                         </div>
                         @if (!string.IsNullOrEmpty(baiViet.AnhBaiViet))
                         {
@@ -89,15 +101,15 @@
                                 </p>
                                 <p> Comments </p>
 
-                                @* @foreach (var cmt in cmts)
-                            {
-                            @if (cmt.MaBaiViet == baiViet.MaBaiViet)
-                            {
-                            <p>
-                            <a class="bold" href="#">@cmt.TenNguoiDung</a> @cmt.NoiDung
-                            </p>
-                            }
-                            } *@
+                                @foreach (var cmt in @ViewBag.cmts)
+                                {
+                                    @if (cmt.MaBaiViet == baiViet.MaBaiViet)
+                                    {
+                                        <p>
+                                            <a class="bold" href="#">@cmt.TenNguoiDung</a> @cmt.NoiDung
+                                        </p>
+                                    }
+                                }
                                 <div class="comment-section" data-mabaiviet="@baiViet.MaBaiViet" data-tennguoidung="@baiViet.MaNguoiDung">
                                     <input type="text" class="commentInput" placeholder="Add a comment..." />
                                 </div>
@@ -109,6 +121,42 @@
         </div>
     </div>
     <!--***** posts_container end ****** -->
-    
+    <!-- form edit profile -->
+    <!-- Modal để chỉnh sửa thông tin cá nhân -->
+    <div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="editProfileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form asp-action="EditProfile" asp-controller="TrangCaNhan" method="post" enctype="multipart/form-data">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editProfileModalLabel">Chỉnh sửa thông tin cá nhân</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="profileImage">Ảnh đại diện</label>
+                            <input type="file" class="form-control" id="profileImage" name="image">
+                        </div>
+                        <div class="form-group">
+                            <label for="tenND">Tên người dùng</label>
+                            <input type="text" class="form-control" id="tenND" name="tenND" value="@ViewBag.nguoiD.TenNguoiDung">
+                        </div>
+                        <div class="form-group">
+                            <label for="TieuSu">Tiểu sử</label>
+                            <textarea class="form-control" id="TieuSu" name="TieuSu">@ViewBag.nguoiD.TieuSu</textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
 
 </div>
+

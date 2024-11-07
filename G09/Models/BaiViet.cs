@@ -12,7 +12,7 @@ public partial class BaiViet
     [NotMapped]
     public string? TenNguoiDung { get; set; }
     [NotMapped]
-    public string? AnhDaiDien {  get; set; }
+    public string? AnhDaiDien { get; set; }
     [NotMapped]
     public string? TenLoaiMonAn { get; set; }
     public string NoiDung { get; set; } = null!;
@@ -35,4 +35,6 @@ public partial class BaiViet
     public bool IsLiked { get; set; }
     [Column("luotthich")]
     public int? SoLuongLike { get; set; }
+    
+    
 }

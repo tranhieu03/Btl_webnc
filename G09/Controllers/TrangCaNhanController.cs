@@ -134,10 +134,11 @@ namespace G09.Controllers
             return View();
         }
         [HttpPost]
-        [Route("TrangCaNhan/editProfile")]
-        public async Task<IActionResult> EditProfile([FromForm] IFormFile image = null, [FromForm] string tenND = "", [FromForm] string TieuSu = "")
+        public async Task<IActionResult> EditProfile(IFormFile image = null, string tenND = "", string TieuSu = "")
         {
-            var nguoiDung = _context.NguoiDungs.Find(2);
+            var currentUserEmail = HttpContext.Session.GetString("Email");
+            var nguoiDung = _context.NguoiDungs.FirstOrDefault(t => t.Email == currentUserEmail);
+
             if (nguoiDung == null)
             {
                 return NotFound();
@@ -146,7 +147,6 @@ namespace G09.Controllers
             if (image != null)
             {
                 var filePath = Path.Combine("wwwroot/User/img", image.FileName);
-                // Kiểm tra xem ảnh đã tồn tại hay chưa
                 if (!System.IO.File.Exists(filePath))
                 {
                     using (var stream = new FileStream(filePath, FileMode.Create))
@@ -172,7 +172,8 @@ namespace G09.Controllers
             _context.Update(nguoiDung);
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("TrangCaNhan"); // Redirect đến view TrangCaNhan
+            return RedirectToAction("TrangCaNhan");
         }
+
     }
 }
